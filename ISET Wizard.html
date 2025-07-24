@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>ISET Service Desk Support Request Wizard</title>
+<style>
+  body {
+    font-family: Arial, sans-serif; max-width: 700px; margin: 20px auto; padding: 10px;
+  }
+  h2 {
+    text-align: center;
+  }
+  label {
+    display: block;
+    margin-top: 12px;
+  }
+  input[type="text"], input[type="email"], textarea, select {
+    width: 100%; max-width: 100%; box-sizing: border-box; padding: 6px; font-size: 14px;
+  }
+  textarea {
+    resize: vertical;
+  }
+  .hidden { display: none; }
+  fieldset {
+    border: 1px solid #ccc;
+    padding: 10px 15px 15px 15px;
+    margin-top: 12px;
+  }
+  legend {
+    font-weight: bold;
+    padding: 0 6px;
+  }
+  /* Best Contact Timing grid style */
+  .timing-grid {
+    margin-top: 6px;
+    display: grid;
+    grid-template-columns: 50px repeat(3, 120px);
+    user-select: none;
+    gap: 4px 12px;
+  }
+  .timing-grid > div {
+    display: flex;
+    align-items: center;
+  }
+  .timing-grid label {
+    margin-left: 4px;
+    cursor: pointer;
+  }
+  /* Severity levels */
+  .severity-block {
+    margin-bottom: 16px;
+  }
+  .severity-label {
+    font-weight: bold;
+  }
+  .severity-desc {
+    font-size: 13px;
+    margin-left: 18px;
+    margin-top: 4px;
+    color: #444;
+  }
+  .error-message {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  button[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+
+<h2>ISET Service Desk Support Request Wizard</h2>
+
+<form id="wizardForm" novalidate>
+
+  <label for="campus">What campus are you on?*</label>
+  <select id="campus" name="campus" required>
+    <option value="">--Select Campus--</option>
+    <option>BES</option><option>CES</option><option>DEC</option><option>FES</option>
+    <option>HES</option><option>JES</option><option>KES</option><option>KHS</option>
+    <option>MES</option><option>MVMS</option><option>NES</option><option>PCES</option>
+    <option>SHS</option><option>SWP</option><option>THS</option><option>TISCS</option>
+    <option>VES</option><option>WHS</option><option>WMS</option>
+  </select>
+
+  <fieldset>
+    <legend>Request/Issue is on behalf of:*</legend>
+    <label><input type="radio" name="onBehalf" value="Myself" required> Myself</label>
+    <label><input type="radio" name="onBehalf" value="Student/Parent"> Student/Parent</label>
+    <label><input type="radio" name="onBehalf" value="Staff Member"> Staff Member</label>
+  </fieldset>
+
+  <!-- Myself Fields -->
+  <div id="myselfFields" class="hidden">
+    <label>Location / Room #</label>
+    <input type="text" name="myself_location" />
+
+    <!-- Email removed as requested -->
+
+    <label>My Contact Phone*<br />
+      <input type="text" name="myself_phone" />
+    </label>
+
+    <label>Best timing window to contact me* (select at least one)</label>
+    <div class="timing-grid" id="myselfTiming">
+      <div>Mon</div>
+      <div><input type="checkbox" name="myself_Mon" value="8am-11am" id="myself_Mon_1"><label for="myself_Mon_1">8am-11am</label></div>
+      <div><input type="checkbox" name="myself_Mon" value="11am-1pm" id="myself_Mon_2"><label for="myself_Mon_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="myself_Mon" value="1pm-4pm" id="myself_Mon_3"><label for="myself_Mon_3">1pm-4pm</label></div>
+
+      <div>Tue</div>
+      <div><input type="checkbox" name="myself_Tue" value="8am-11am" id="myself_Tue_1"><label for="myself_Tue_1">8am-11am</label></div>
+      <div><input type="checkbox" name="myself_Tue" value="11am-1pm" id="myself_Tue_2"><label for="myself_Tue_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="myself_Tue" value="1pm-4pm" id="myself_Tue_3"><label for="myself_Tue_3">1pm-4pm</label></div>
+
+      <div>Wed</div>
+      <div><input type="checkbox" name="myself_Wed" value="8am-11am" id="myself_Wed_1"><label for="myself_Wed_1">8am-11am</label></div>
+      <div><input type="checkbox" name="myself_Wed" value="11am-1pm" id="myself_Wed_2"><label for="myself_Wed_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="myself_Wed" value="1pm-4pm" id="myself_Wed_3"><label for="myself_Wed_3">1pm-4pm</label></div>
+
+      <div>Thu</div>
+      <div><input type="checkbox" name="myself_Thu" value="8am-11am" id="myself_Thu_1"><label for="myself_Thu_1">8am-11am</label></div>
+      <div><input type="checkbox" name="myself_Thu" value="11am-1pm" id="myself_Thu_2"><label for="myself_Thu_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="myself_Thu" value="1pm-4pm" id="myself_Thu_3"><label for="myself_Thu_3">1pm-4pm</label></div>
+
+      <div>Fri</div>
+      <div><input type="checkbox" name="myself_Fri" value="8am-11am" id="myself_Fri_1"><label for="myself_Fri_1">8am-11am</label></div>
+      <div><input type="checkbox" name="myself_Fri" value="11am-1pm" id="myself_Fri_2"><label for="myself_Fri_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="myself_Fri" value="1pm-4pm" id="myself_Fri_3"><label for="myself_Fri_3">1pm-4pm</label></div>
+    </div>
+  </div>
+
+  <!-- Student/Parent Fields -->
+  <div id="spFields" class="hidden">
+    <label>Student/Parent Name</label>
+    <input type="text" name="sp_name" />
+
+    <label>Contact Email for Student/Parent*</label>
+    <input type="email" name="sp_email" />
+
+    <label>Contact Phone for Student/Parent*</label>
+    <input type="text" name="sp_phone" />
+
+    <label>Best timing window to contact me* (select at least one)</label>
+    <div class="timing-grid" id="spTiming">
+      <div>Mon</div>
+      <div><input type="checkbox" name="sp_Mon" value="8am-11am" id="sp_Mon_1"><label for="sp_Mon_1">8am-11am</label></div>
+      <div><input type="checkbox" name="sp_Mon" value="11am-1pm" id="sp_Mon_2"><label for="sp_Mon_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="sp_Mon" value="1pm-4pm" id="sp_Mon_3"><label for="sp_Mon_3">1pm-4pm</label></div>
+
+      <div>Tue</div>
+      <div><input type="checkbox" name="sp_Tue" value="8am-11am" id="sp_Tue_1"><label for="sp_Tue_1">8am-11am</label></div>
+      <div><input type="checkbox" name="sp_Tue" value="11am-1pm" id="sp_Tue_2"><label for="sp_Tue_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="sp_Tue" value="1pm-4pm" id="sp_Tue_3"><label for="sp_Tue_3">1pm-4pm</label></div>
+
+      <div>Wed</div>
+      <div><input type="checkbox" name="sp_Wed" value="8am-11am" id="sp_Wed_1"><label for="sp_Wed_1">8am-11am</label></div>
+      <div><input type="checkbox" name="sp_Wed" value="11am-1pm" id="sp_Wed_2"><label for="sp_Wed_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="sp_Wed" value="1pm-4pm" id="sp_Wed_3"><label for="sp_Wed_3">1pm-4pm</label></div>
+
+      <div>Thu</div>
+      <div><input type="checkbox" name="sp_Thu" value="8am-11am" id="sp_Thu_1"><label for="sp_Thu_1">8am-11am</label></div>
+      <div><input type="checkbox" name="sp_Thu" value="11am-1pm" id="sp_Thu_2"><label for="sp_Thu_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="sp_Thu" value="1pm-4pm" id="sp_Thu_3"><label for="sp_Thu_3">1pm-4pm</label></div>
+
+      <div>Fri</div>
+      <div><input type="checkbox" name="sp_Fri" value="8am-11am" id="sp_Fri_1"><label for="sp_Fri_1">8am-11am</label></div>
+      <div><input type="checkbox" name="sp_Fri" value="11am-1pm" id="sp_Fri_2"><label for="sp_Fri_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="sp_Fri" value="1pm-4pm" id="sp_Fri_3"><label for="sp_Fri_3">1pm-4pm</label></div>
+    </div>
+  </div>
+
+  <!-- Staff Member Fields -->
+  <div id="staffFields" class="hidden">
+    <label>Submitting For (enter Staff Member's Name)</label>
+    <input type="text" name="staff_name" />
+
+    <label>Contact Email for Staff Member*</label>
+    <input type="email" name="staff_contactEmail" />
+
+    <label>Contact Phone for Staff Member*</label>
+    <input type="text" name="staff_phone" />
+
+    <label>Location / Room #</label>
+    <input type="text" name="staff_location" />
+
+    <label>Best timing window to contact me* (select at least one)</label>
+    <div class="timing-grid" id="staffTiming">
+      <div>Mon</div>
+      <div><input type="checkbox" name="staff_Mon" value="8am-11am" id="staff_Mon_1"><label for="staff_Mon_1">8am-11am</label></div>
+      <div><input type="checkbox" name="staff_Mon" value="11am-1pm" id="staff_Mon_2"><label for="staff_Mon_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="staff_Mon" value="1pm-4pm" id="staff_Mon_3"><label for="staff_Mon_3">1pm-4pm</label></div>
+
+      <div>Tue</div>
+      <div><input type="checkbox" name="staff_Tue" value="8am-11am" id="staff_Tue_1"><label for="staff_Tue_1">8am-11am</label></div>
+      <div><input type="checkbox" name="staff_Tue" value="11am-1pm" id="staff_Tue_2"><label for="staff_Tue_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="staff_Tue" value="1pm-4pm" id="staff_Tue_3"><label for="staff_Tue_3">1pm-4pm</label></div>
+
+      <div>Wed</div>
+      <div><input type="checkbox" name="staff_Wed" value="8am-11am" id="staff_Wed_1"><label for="staff_Wed_1">8am-11am</label></div>
+      <div><input type="checkbox" name="staff_Wed" value="11am-1pm" id="staff_Wed_2"><label for="staff_Wed_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="staff_Wed" value="1pm-4pm" id="staff_Wed_3"><label for="staff_Wed_3">1pm-4pm</label></div>
+
+      <div>Thu</div>
+      <div><input type="checkbox" name="staff_Thu" value="8am-11am" id="staff_Thu_1"><label for="staff_Thu_1">8am-11am</label></div>
+      <div><input type="checkbox" name="staff_Thu" value="11am-1pm" id="staff_Thu_2"><label for="staff_Thu_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="staff_Thu" value="1pm-4pm" id="staff_Thu_3"><label for="staff_Thu_3">1pm-4pm</label></div>
+
+      <div>Fri</div>
+      <div><input type="checkbox" name="staff_Fri" value="8am-11am" id="staff_Fri_1"><label for="staff_Fri_1">8am-11am</label></div>
+      <div><input type="checkbox" name="staff_Fri" value="11am-1pm" id="staff_Fri_2"><label for="staff_Fri_2">11am-1pm</label></div>
+      <div><input type="checkbox" name="staff_Fri" value="1pm-4pm" id="staff_Fri_3"><label for="staff_Fri_3">1pm-4pm</label></div>
+    </div>
+  </div>
+
+  <fieldset required style="margin-top:20px;">
+    <legend>Issue/Request Severity Level* (select one)</legend>
+    <div class="severity-block">
+      <label class="severity-label"><input type="radio" name="severity" value="L1 - Critical" required> L1 - Critical</label>
+      <div class="severity-desc">
+        Widespread outage, safety or security risk<br>
+        SIS (Aeries), Wi-Fi/Network down for multiple students, Office 365
+      </div>
+    </div>
+    <div class="severity-block">
+      <label class="severity-label"><input type="radio" name="severity" value="L2 - Moderate"> L2 - Moderate</label>
+      <div class="severity-desc">
+        Affects one user or non-critical system<br>
+        Teacher can’t log in
+      </div>
+    </div>
+    <div class="severity-block">
+      <label class="severity-label"><input type="radio" name="severity" value="L3 - Minor"> L3 - Minor</label>
+      <div class="severity-desc">
+        Cosmetic or workaround exists<br>
+        App layout broken, but usable
+      </div>
+    </div>
+  </fieldset>
+
+  <label style="margin-top:20px;">Detailed description of the issue/request:*</label>
+  <textarea name="description" rows="6" required></textarea>
+
+  <button type="submit">Create Draft Email</button>
+
+  <div id="errorMessages" style="color: red; margin-top: 10px;"></div>
+
+</form>
+
+<script>
+  const myselfFields = document.getElementById('myselfFields');
+  const spFields = document.getElementById('spFields');
+  const staffFields = document.getElementById('staffFields');
+  const errorDiv = document.getElementById('errorMessages');
+
+  document.querySelectorAll('input[name="onBehalf"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      errorDiv.textContent = '';
+      myselfFields.classList.add('hidden');
+      spFields.classList.add('hidden');
+      staffFields.classList.add('hidden');
+      if (radio.value === 'Myself') {
+        myselfFields.classList.remove('hidden');
+      } else if (radio.value === 'Student/Parent') {
+        spFields.classList.remove('hidden');
+      } else if (radio.value === 'Staff Member') {
+        staffFields.classList.remove('hidden');
+      }
+    });
+  });
+
+  function encode(text) {
+    return encodeURIComponent(text || '').replace(/'/g, "%27").replace(/"/g, "%22");
+  }
+
+  function isValidEmail(email) {
+    return /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email);
+  }
+
+  function getCcField(arr) {
+    let ccList = [...new Set(arr.filter(isValidEmail))];
+    return ccList.length ? `&cc=${encodeURIComponent(ccList.join(','))}` : '';
+  }
+
+  function mailtoMarkdown(email) {
+    return `[${email}](mailto:${email})`;
+  }
+
+  function indent(text) {
+    const indentStr = '      ';
+    return text.split('\n').map(line => indentStr + line).join('\n');
+  }
+
+  function getCheckedValuesByPrefix(form, prefix) {
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    let result = {};
+    days.forEach(day => {
+      const checkedBoxes = Array.from(form.querySelectorAll(`input[name="${prefix}_${day}"]:checked`)).map(cb => cb.value);
+      result[day] = checkedBoxes;
+    });
+    return result;
+  }
+
+  function formatTimingSummary(timingObj) {
+    const allTimes = ['8am-11am', '11am-1pm', '1pm-4pm'];
+    let lines = [];
+    for (let day in timingObj) {
+      let timesSelected = timingObj[day];
+      if (timesSelected.length === 0) continue;
+      if (timesSelected.length === allTimes.length) lines.push(`${day}: Anytime`);
+      else lines.push(`${day}: ${timesSelected.join(", ")}`);
+    }
+    return lines.join('\n');
+  }
+
+  // Helper for empty check on phone (no formatting required)
+  function phoneIsEmpty(phone) {
+    return !phone || phone.trim() === '';
+  }
+
+  document.getElementById('wizardForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    errorDiv.textContent = '';
+
+    const form = e.target;
+    const campus = form.campus.value.trim();
+    const onBehalf = form.onBehalf.value;
+    const description = form.description.value.trim();
+
+    let errors = [];
+    if (!campus) errors.push("Please select a campus.");
+    if (!onBehalf) errors.push("Please select who this request is on behalf of.");
+    if (!description) errors.push("Please enter a detailed description of the issue/request.");
+
+    let location = "";
+    let contactInfo = "";
+    let ccEmails = [];
+    let emailVal = '';
+    let phoneVal = '';
+    let timingSummary = '';
+
+    if (onBehalf === "Myself") {
+      location = form.myself_location.value.trim();
+
+      emailVal = ''; // no email input here for Myself
+      phoneVal = form.myself_phone.value.trim();
+      let timingObj = getCheckedValuesByPrefix(form, 'myself');
+      timingSummary = formatTimingSummary(timingObj);
+      let timingIndented = indent(timingSummary);
+
+      if (phoneIsEmpty(phoneVal)) errors.push("Please enter your contact phone.");
+      if (timingSummary === '') errors.push("Please select at least one best timing window to contact you.");
+
+      contactInfo = `My Phone: ${phoneVal}\nBest timing window to contact me:\n${timingIndented}\n`;
+    }
+    else if (onBehalf === "Student/Parent") {
+      const spName = form.sp_name.value.trim();
+
+      emailVal = form.sp_email.value.trim();
+      phoneVal = form.sp_phone.value.trim();
+      let timingObj = getCheckedValuesByPrefix(form, 'sp');
+      timingSummary = formatTimingSummary(timingObj);
+      let timingIndented = indent(timingSummary);
+
+      if (!spName) errors.push("Please enter Student/Parent name.");
+      if (!emailVal) errors.push("Please enter contact email for Student/Parent.");
+      else if (!isValidEmail(emailVal)) errors.push("Please enter a valid email address for Student/Parent.");
+      if (phoneIsEmpty(phoneVal)) errors.push("Please enter contact phone for Student/Parent.");
+      if (timingSummary === '') errors.push("Please select at least one best timing window to contact you.");
+
+      location = "N/A";
+
+      contactInfo =
+        `Student/Parent Name: ${spName}\n` +
+        `Contact Email: ${mailtoMarkdown(emailVal)}\n` +
+        `Contact Phone: ${phoneVal}\n` +
+        `Best timing window to contact me:\n${timingIndented}\n`;
+
+      if (isValidEmail(emailVal)) ccEmails.push(emailVal);
+    }
+    else if (onBehalf === "Staff Member") {
+      const staffName = form.staff_name.value.trim();
+      const staffEmail = form.staff_contactEmail.value.trim();
+      phoneVal = form.staff_phone.value.trim();
+      location = form.staff_location.value.trim();
+
+      let timingObj = getCheckedValuesByPrefix(form, 'staff');
+      timingSummary = formatTimingSummary(timingObj);
+      let timingIndented = indent(timingSummary);
+
+      if (!staffName) errors.push("Please enter the Staff Member's name you are submitting for.");
+      if (!staffEmail) errors.push("Please enter contact email for Staff Member.");
+      else if (!isValidEmail(staffEmail)) errors.push("Please enter a valid contact email for Staff Member.");
+      if (phoneIsEmpty(phoneVal)) errors.push("Please enter contact phone for Staff Member.");
+      if (timingSummary === '') errors.push("Please select at least one best timing window to contact you.");
+
+      contactInfo =
+        `Submitting For (Staff Member's Name): ${staffName}\n` +
+        `Contact Email: ${mailtoMarkdown(staffEmail)}\n` +
+        `Contact Phone: ${phoneVal}\n` +
+        `Location/Rm#: ${location || 'N/A'}\n` +
+        `Best timing window to contact me:\n${timingIndented}\n`;
+
+      if (isValidEmail(staffEmail)) ccEmails.push(staffEmail);
+    }
+
+    const severity = form.severity.value;
+    if (!severity) errors.push("Please select an Issue/Request Severity Level.");
+
+    if (errors.length > 0) {
+      errorDiv.innerHTML = errors.map(e => `<div>${e}</div>`).join('');
+      return;
+    }
+
+    const severityLine = `Severity Level: ${severity}\n`;
+    const descriptionIndented = indent(description);
+    const mailtoRecipient = campus + "TECHSUPPORT@TUSD.NET";
+
+    const bodyText = `Campus: ${campus}\n` +
+      `Location/Rm#: ${location || 'N/A'}\n` +
+      `${contactInfo}\n` +
+      `${severityLine}` +
+      `Detailed description of Issue/Request:\n${descriptionIndented}\n\n` +
+      "***PLEASE ATTACH ANY SCREENSHOTS OR SUPPORTING DOCUMENTS TO THIS EMAIL BEFORE SENDING***\n" +
+      "***REMEMBER TO ADD ANY CONCERNED PARTIES TO THE CC FIELD AS NEEDED***";
+
+    // Build mailto URL with CC emails
+    let mailtoUrl =
+      `mailto:${mailtoRecipient}?subject=${encode("Tech Support Request - " + campus)}&body=${encode(bodyText)}` +
+      getCcField(ccEmails);
+
+    // Add high importance and followup for L1 or L2 severity
+    if (severity === "L1 - Critical" || severity === "L2 - Moderate") {
+      mailtoUrl += '&importance=high&followup=Today';
+    }
+
+    const oldLink = document.getElementById('mailtoLink');
+    if (oldLink) oldLink.remove();
+
+    const newWindow = window.open(mailtoUrl, '_blank');
+
+    if (!newWindow) {
+      const link = document.createElement('a');
+      link.href = mailtoUrl;
+      link.target = '_blank';
+      link.rel = "noopener";
+      link.id = 'mailtoLink';
+      link.textContent = 'Click here if your email client did not open automatically to create the draft email.';
+      link.style.display = 'block';
+      link.style.marginTop = '10px';
+      link.style.fontWeight = 'bold';
+      this.querySelector('button[type="submit"]').insertAdjacentElement('afterend', link);
+
+      alert("Your browser blocked the automatic email draft opening.\nPlease click the link added below the button to open your email client.");
+    } else {
+      alert("A new email draft should have opened in your default email client.\nPlease attach any screenshots or supporting documents before sending.");
+    }
+    return false;
+  });
+</script>
+
+</body>
+</html>
